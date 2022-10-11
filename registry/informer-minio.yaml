@@ -10,4 +10,8 @@ spec:
   containers:
     - name: informer-minio
       image: busybox
+      command: ['sh', '-c', 'echo Hello World!']
+  initContainers:
+    - name: informer-minio
+      image: busybox
       command: ['sh', '-c', 'echo Hello World! && sleep 120']
