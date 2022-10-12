@@ -33,6 +33,20 @@ spec:
           purge: true
           versioning: false
           objectlocking: false
+        - name: argo-artifacts
+          # try `public` as a fallback
+          policy: none
+          # Purge if bucket exists already
+          purge: true
+          versioning: false
+          objectlocking: false
+        - name: gitlab-backup
+          # try `public` as a fallback
+          policy: none
+          # Purge if bucket exists already
+          purge: true
+          versioning: false
+          objectlocking: false
     chart: minio
   destination:
     server: 'https://kubernetes.default.svc'
@@ -47,7 +61,7 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: minio-wait
+  name: minio-wait # talk to cesar and use informers
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "11"
