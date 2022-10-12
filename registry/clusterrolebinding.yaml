@@ -21,7 +21,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
 subjects:
 - kind: ServiceAccount
-  name: argo
+  # name: argo
+  name: argo-argo-workflows-server
   namespace: argo
 roleRef:
   kind: ClusterRole
