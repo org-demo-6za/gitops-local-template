@@ -1206,33 +1206,33 @@ server:
   # -- Deploy Argo CD Applications within this helm release
   # @default -- `[]` (See [values.yaml])
   ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/
-  additionalApplications:
-  - name: registry
-    namespace: argocd
-    additionalLabels: {}
-    additionalAnnotations: {}
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    project: default
-    source:
-      repoURL: https://github.com/jarededwards/gitops
-      targetRevision: HEAD
-      path: registry
-    destination:
-      server: https://kubernetes.default.svc
-      namespace: argocd
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
-      syncOptions:
-      - CreateNamespace=true
-      retry:
-        limit: 5
-        backoff:
-          duration: 5s
-          maxDuration: 5m0s
-          factor: 2
+  # additionalApplications:
+  # - name: registry
+  #   namespace: argocd
+  #   additionalLabels: {}
+  #   additionalAnnotations: {}
+  #   finalizers:
+  #   - resources-finalizer.argocd.argoproj.io
+  #   project: default
+  #   source:
+  #     repoURL: https://github.com/jarededwards/gitops
+  #     targetRevision: HEAD
+  #     path: registry
+  #   destination:
+  #     server: https://kubernetes.default.svc
+  #     namespace: argocd
+  #   syncPolicy:
+  #     automated:
+  #       prune: true
+  #       selfHeal: true
+  #     syncOptions:
+  #     - CreateNamespace=true
+  #     retry:
+  #       limit: 5
+  #       backoff:
+  #         duration: 5s
+  #         maxDuration: 5m0s
+  #         factor: 2
   #   info:
   #   - name: url
   #     value: https://argoproj.github.io/
