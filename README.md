@@ -35,16 +35,15 @@ password : $from-above-k8s-secret
 ### argo
 ```bash
 # password
+local kubeconfig will get you access
 # port-forward
-
+kubectl -n argo port-forward svc/argo-argo-workflows-server 2746:2746
 ```
-user: admin   
-password : $from-above
 
 ### minio
 ```bash
 # port-forward
-
+kubectl -n minio port-forward svc/minio-console 9001:9001
 ```
 user: k-ray   
 password : feedkraystars   
@@ -52,20 +51,25 @@ password : feedkraystars
 
 # k3d registry
 ### find a good working directory for some garbage
+
+```bash
 git clone https://github.com/jarededwards/miller.git
+
+cd miller 
+
 docker build -t localhost:63630/miller:latest .
 docker push localhost:63630/miller:latest
-```bash
 # getting ErrImgPull in kubernetes from Deployment, not successfully pulling from k3d registry, didn't look into it
 ```
 
 # chartmuseum
+```bash
 helm repo add kubefirst-charts http://localhost:8181 --username k-ray --password feedkraystars
 helm cm-push charts/miller kubefirst-charts
-
+```
 
 # argo workflows
-this will submit an argo workflow to the local 
+this will submit an argo workflow that produces an artifact in minio
 ```bash
 # por
 kubectl -n argo port-forward svc/argo-argo-workflows-server 2746:2746
