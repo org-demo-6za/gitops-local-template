@@ -17,6 +17,7 @@ spec:
         server:
           extraArgs:
           - --auth-mode=client
+          - --auth-mode=server
         useDefaultArtifactRepo: true
         useStaticCredentials: true
         artifactRepository:
