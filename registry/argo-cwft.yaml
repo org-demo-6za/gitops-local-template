@@ -22,31 +22,25 @@ spec:
       command: ["/bin/sh", "-c"]
       args: 
       - ls -la /src/gitops
-    # outputs:
-    #   artifacts:
-    #   - name: repo-source
-    #     path: /src  
+    outputs:
+      artifacts:
+      - name: repo-source
+        path: /src  
         
-  - name: publish
-    # inputs:
-      # parameters: 
-      # - name: appDir
-      # - name: branch
-      #   value: "{{workflow.parameters.branch}}"
-      #   default: main
-      # artifacts:
-      # - name: gitops-source
-      #   path: /src/gitops
-      #   git:
-      #     repo: https://github.com/jarededwards/gitops
-      #     revision: main
+  - name: docker-build
+    inputs:
+      artifacts:
+      - name: repo-source
+        path: /src
+      parameters: 
+      - name: appDir
+      - name: appName
     container:
       image: golang:latest
       command: ["/bin/sh", "-c"]
       args: 
-      - ls -la /
+      - ls -la /src
     # outputs:
     #   artifacts:
     #   - name: repo-source
     #     path: /src  
-        
