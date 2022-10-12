@@ -35,7 +35,7 @@ spec:
           objectlocking: false
         - name: argo-artifacts
           # try `public` as a fallback
-          policy: none
+          policy: public
           # Purge if bucket exists already
           purge: true
           versioning: false
