@@ -1,48 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
-kind: ClusterWorkflowTemplate
+kind: Application
 metadata:
-  name: cwft-local
+  name: cwft-components
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "25"
+    argocd.argoproj.io/sync-wave: "50"
 spec:
-  templates:
-  - name: git-checkout
-    inputs:
-      # parameters: 
-      # - name: appDir
-      # - name: branch
-      #   value: "{{workflow.parameters.branch}}"
-      #   default: main
-      artifacts:
-      - name: gitops-source
-        path: /src/gitops
-        git:
-          repo: https://github.com/jarededwards/gitops
-          revision: main
-    container:
-      image: golang:latest
-      command: ["/bin/sh", "-c"]
-      args: 
-      - ls -la /src/gitops
-    outputs:
-      artifacts:
-      - name: repo-source
-        path: /src  
-        
-  - name: docker-build
-    inputs:
-      artifacts:
-      - name: repo-source
-        path: /src
-      parameters: 
-      - name: appDir
-      - name: appName
-    container:
-      image: golang:latest
-      command: ["/bin/sh", "-c"]
-      args: 
-      - ls -la /src
-    # outputs:
-    #   artifacts:
-    #   - name: repo-source
-    #     path: /src  
+  project: default
+  source:
+    repoURL: https://github.com/jarededwards/gitops
+    path: components/argo-cwfts
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
