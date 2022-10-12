@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: k1-ready
+  namespace: default
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: k1-ready
+  namespace: default
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"  
+spec:
+  template:
+    spec:
+      serviceAccountName: k1-ready    
+      containers:
+       -  image: 6zar/k1test:latest
+          name: k1-ready
+          imagePullPolicy: Always
+          command: ["/usr/local/bin/kubefirst"]
+          args: ["podinformer"]    
+      restartPolicy: Never
+  backoffLimit: 1  
