@@ -13,7 +13,9 @@ spec:
     repoURL: 'https://argoproj.github.io/argo-helm'
     targetRevision: 0.20.1
     helm:
-      values: |
+      values: |-
+        useDefaultArtifactRepo: false
+        useStaticCredentials: true
         artifactRepository:
           archiveLogs: false
           s3:
@@ -25,7 +27,7 @@ spec:
               key: secretkey
             insecure: true
             bucket: argo-workflows-artifacts
-            endpoint: "http://minio.minio.svc.cluster.local:9000"
+            endpoint: http://minio.minio.svc.cluster.local:9000
             region: us-k3d-1
             useSDKCreds: false
             encryptionOptions:
