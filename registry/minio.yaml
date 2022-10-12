@@ -61,7 +61,7 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: minio-wait # talk to cesar and use informers
+  name: minio-wait # talk to cesar and use informers :)
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "11"

@@ -81,4 +81,9 @@ spec:
 
 https://github.com/ContainerSolutions/trow/blob/main/docs/USER_GUIDE.md
 
+
 ```
+
+# big side step - argo admin kubectl boom
+MESSAGE
+Error (exit code 1): pods "testing-123-k8gmp-git-checkout-2935214226" is forbidden: User "system:serviceaccount:argo:default" cannot patch resource "pods" in API group "" in the namespace "argo"
