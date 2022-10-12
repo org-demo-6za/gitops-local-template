@@ -9,6 +9,7 @@ spec:
     # parameters:
     #   - name: appDir
     #     value: /src/{{workflow.parameters.appName}}
+  serviceAccountName: argo-argo-workflows-server # todo fix this name 2 places
   templates:
     - name: main
       steps:

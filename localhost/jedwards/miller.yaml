@@ -12,7 +12,7 @@ spec:
   source:
     repoURL: https://github.com/jarededwards/gitops
     path: localhost/jedwards
-    targetRevision: je/001-kubefirst-local #* my branch
+    targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
     namespace: development
