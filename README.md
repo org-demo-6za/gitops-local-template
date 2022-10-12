@@ -1,18 +1,82 @@
 # gitops for local development of a cluster
 
-[https://k3d.io/v5.3.0](https://k3d.io/v5.3.0)
-
+## step 1 - brew install [k3d](https://k3d.io/v5.3.0)
 ```bash
-k3d cluster create kubefirst --agents 3 --agents-memory 1024m  --registry-use k3d-registry:64606
+brew install k3d
 ```
 
-## helm install argocd with values yaml 
+## step 2 - create a new local cluster
 ```bash
+k3d registry create kubefirst-registry --port 63630
+
+k3d cluster create kubefirst --agents 3 --agents-memory 1024m  --registry-use k3d-kubefirst-registry:63630
+```
+## step 3 helm install argocd
+```bash
+helm plugin install https://github.com/chartmuseum/helm-push
+
 helm repo add argo https://argoproj.github.io/argo-helm
-"argo" has been added to your repositories
+# helm repo update?
 
-helm install argocd --namespace argocd --create-namespace -f ./components/localhost/argocd-values.yaml --version 4.10.2 argo/argo-cd
+helm install argocd --namespace argocd --create-namespace -f ./argocd-values.yaml --version 4.10.2 argo/argo-cd
+```
 
+# access
+### argocd
+```bash
+# password
+kubectl -n argocd get secrets argocd-initial-admin-secret -ojson | jq -r .data.password | base64 -D
+# port-forward
+kubectl -n argocd port-forward svc/argocd-server 8080:80
+```
+user: admin   
+password : $from-above-k8s-secret
+
+### argo
+```bash
+# password
+# port-forward
+
+```
+user: admin   
+password : $from-above
+
+### minio
+```bash
+# port-forward
+
+```
+user: k-ray   
+password : feedkraystars   
+
+
+# k3d registry
+### find a good working directory for some garbage
+git clone https://github.com/jarededwards/miller.git
+docker build -t localhost:63630/miller:latest .
+docker push localhost:63630/miller:latest
+```bash
+# getting ErrImgPull in kubernetes from Deployment, not successfully pulling from k3d registry, didn't look into it
+```
+
+# chartmuseum
+helm repo add kubefirst-charts http://localhost:8181 --username k-ray --password feedkraystars
+helm cm-push charts/miller kubefirst-charts
+
+
+# argo workflows
+this will submit an argo workflow to the local 
+```bash
+# por
+kubectl -n argo port-forward svc/argo-argo-workflows-server 2746:2746
+argo submit -f wf/artifacts.yaml 
+```
+
+
+---
+# stop reading here
+
+```bash
 export AWS_ACCESS_KEY_ID=k-ray
 export AWS_SECRET_ACCESS_KEY=feedkraystars
 
@@ -80,10 +144,10 @@ spec:
 
 
 https://github.com/ContainerSolutions/trow/blob/main/docs/USER_GUIDE.md
-
-
 ```
 
 # big side step - argo admin kubectl boom
 MESSAGE
 Error (exit code 1): pods "testing-123-k8gmp-git-checkout-2935214226" is forbidden: User "system:serviceaccount:argo:default" cannot patch resource "pods" in API group "" in the namespace "argo"
+
+kubectl create rolebinding default-admin --clusterrole=admin --serviceaccount=argo:default -n argo
