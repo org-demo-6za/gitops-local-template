@@ -55,7 +55,9 @@ spec:
       command: [sh, -c]
       workingDir: /root
       args:
-        - cat /etc/docker/daemon.json;
+        - ls -la /etc/;
+          ls -la /etc/docker;
+          cat /etc/docker/daemon.json;
       # env:
         # - name: DOCKER_TLS_CERTDIR
         #   value: ""
