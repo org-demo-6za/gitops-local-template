@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: miller-development
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
   annotations:
     argocd.argoproj.io/sync-wave: "40"
 spec:
@@ -16,7 +14,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: development
-  syncPolicy: #* speed up sync?
+  syncPolicy:
     automated:
       prune: true
       selfHeal: true

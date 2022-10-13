@@ -1,29 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vault
+  name: vault-components
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "40"
+    argocd.argoproj.io/sync-wave: "50"
 spec:
   project: default
   source:
-    repoURL: 'https://helm.releases.hashicorp.com'
-    targetRevision: 0.22.0
-    helm:
-      values: |-
-        server:
-          affinity: ""
-          ha:
-            enabled: true
-          dev:
-            enabled: true
-            devRootToken: "k1_local_vault_token"
-    chart: vault
+    repoURL: https://github.com/jarededwards/gitops
+    path: components/vault
+    targetRevision: HEAD
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: https://kubernetes.default.svc
     namespace: vault
   syncPolicy:
     automated:
@@ -31,8 +20,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-  ignoreDifferences:
-  - group: admissionregistration.k8s.io
-    kind: MutatingWebhookConfiguration
-    jsonPointers:
-    - /webhooks

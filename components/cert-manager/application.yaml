@@ -14,7 +14,7 @@ spec:
       values: 'installCRDs: true'
     chart: cert-manager
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: https://kubernetes.default.svc
     namespace: cert-manager
   syncPolicy:
     syncOptions:

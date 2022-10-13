@@ -1,55 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: minio
+  name: minio-components
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/sync-wave: "50"
 spec:
   project: default
   source:
-    repoURL: 'https://charts.min.io/'
-    targetRevision: 4.0.15
-    helm:
-      values: |-
-        replicas: 1
-        rootUser: k-ray
-        rootPassword: feedkraystars
-        persistence:
-          enabled: false
-        resources:
-          requests:
-            memory: 500Mi
-        gateway:
-          replicas: 1
-        mode: standalone
-        buckets:
-        - name: chartmuseum
-          # try `public` as a fallback
-          policy: none
-          # Purge if bucket exists already
-          purge: true
-          versioning: false
-          objectlocking: false
-        - name: argo-artifacts
-          # try `public` as a fallback
-          policy: public
-          # Purge if bucket exists already
-          purge: true
-          versioning: false
-          objectlocking: false
-        - name: gitlab-backup
-          # try `public` as a fallback
-          policy: none
-          # Purge if bucket exists already
-          purge: true
-          versioning: false
-          objectlocking: false
-    chart: minio
+    repoURL: https://github.com/jarededwards/gitops
+    path: components/minio
+    targetRevision: HEAD
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: https://kubernetes.default.svc
     namespace: minio
   syncPolicy:
     automated:
@@ -57,27 +20,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-# ---
-# apiVersion: batch/v1
-# kind: Job
-# metadata:
-#   name: minio-wait # talk to cesar and use informers :)
-#   namespace: argocd
-#   annotations:
-#     argocd.argoproj.io/sync-wave: "11"
-# spec:
-#   template:
-#     spec:
-#       serviceAccountName: argocd-server
-#       containers:
-#       - name: minio-components-wait
-#         image: argoproj/argocd:v2.4.6
-#         command:
-#         - /bin/sh
-#         - -c
-#         - |
-#           argocd login argocd.argocd-server.svc.cluster.local --core
-#           argocd app wait minio
-#           sleep 15
-#       restartPolicy: Never
-#   backoffLimit: 1

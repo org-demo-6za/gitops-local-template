@@ -1,13 +1,14 @@
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
-  name: actions-runner-kubefirst-je
+  name: actions-runner-kubefirst
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
 spec:
-  # This will deploy 2 runners now
   replicas: 2
   template:
     spec:  
-      repository: jarededwards/gitops
+      repository: jarededwards/gitops # todo replace this
       image: summerwind/actions-runner-dind
       serviceAccountName: github-runner
       dockerdWithinRunnerContainer: true

@@ -3,10 +3,8 @@ kind: Application
 metadata:
   name: github-runner-components
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "40"
+    argocd.argoproj.io/sync-wave: "60"
     addons.kubefirst.io/name: github
 spec:
   project: default

@@ -1,19 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: external-secrets-store
+  name: miller-development
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "50"
+    argocd.argoproj.io/sync-wave: "100"
 spec:
   project: default
   source:
     repoURL: https://github.com/jarededwards/gitops
-    path: components/eso-store
+    path: components/development/miller # todo apps/development/miller ?
     targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: external-secrets-store
+    server: https://kubernetes.default.svc
+    namespace: development
   syncPolicy:
     automated:
       prune: true
