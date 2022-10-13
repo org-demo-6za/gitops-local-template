@@ -1,0 +1,11 @@
+name:  Release Main
+on:
+ push:
+   branches:
+     - main
+jobs:
+  publish:
+    runs-on: self-hosted
+    steps:            
+      - name: Check out repository code
+        uses: actions/checkout@v3

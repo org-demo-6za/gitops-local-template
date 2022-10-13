@@ -1,3 +1,23 @@
+# READ HERE
+
+
+
+
+
+
+
+todo 
+- move all apps into components and wire in sync waves / sleeps :) 
+
+
+
+
+
+
+
+# READ HERE
+
+
 # gitops for local development of a cluster
 
 ## step 1 - brew install [k3d](https://k3d.io/v5.3.0)
@@ -175,24 +195,3 @@ kubectl create rolebinding default-admin --clusterrole=admin --serviceaccount=ar
 
 
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: miller-registry
-  labels:
-    app: miller-registry
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: miller-registry
-  template:
-    metadata:
-      labels:
-        app: miller-registry
-    spec:
-      containers:
-      - name: miller-registry
-        image: localhost:63630/miller:1.0.0
-        ports:
-        - containerPort: 80
