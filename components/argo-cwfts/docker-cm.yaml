@@ -8,5 +8,6 @@ data:
     {
       "insecure-registries": ["k3d-kubefirst-registry:5000"],
       "debug": true,
-      "tls": false
+      "tls": false,
+      "experimental": true
     }
