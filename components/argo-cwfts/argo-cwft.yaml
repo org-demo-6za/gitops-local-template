@@ -54,6 +54,8 @@ spec:
       env:
         - name: DOCKER_TLS_CERTDIR
           value: ""
+        - name: DOCKER_OPTS
+          value: "--insecure-registry=k3d-kubefirst-registry:5000"
       securityContext:
         privileged: true
       mirrorVolumeMounts: true
