@@ -42,7 +42,8 @@ spec:
       command: [bash, -c]
       workingDir: /src/miller
       args:
-        - until docker ps; do sleep 3; done; 
+        - until docker ps; do sleep 3; done;
+          ls -la $HOME/.docker
           docker build -t k3d-kubefirst-registry:5000/miller:1.0.3 .;
           docker push k3d-kubefirst-registry:5000/miller:1.0.3;
       env:
@@ -59,3 +60,10 @@ spec:
       securityContext:
         privileged: true
       mirrorVolumeMounts: true
+      volumeMounts:
+      - mountPath: /etc/docker
+        name: docker-config
+    volumes:
+      - configMap:
+          name: docker-config-cm
+        name: docker-config
