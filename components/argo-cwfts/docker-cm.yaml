@@ -7,6 +7,5 @@ data:
   daemon.json: |
     {
       "insecure-registries": ["k3d-kubefirst-registry:5000"],
-      "tlsverify": false,
-      "tls": false
+      "tlsverify": false
     }
