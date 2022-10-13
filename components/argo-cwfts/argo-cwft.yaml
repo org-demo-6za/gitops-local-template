@@ -54,9 +54,13 @@ spec:
     sidecars:
     - name: dind
       image: docker:19.03.13-dind
-      env:
-        - name: DOCKER_TLS_CERTDIR
-          value: ""
+      command: [bash, -c]
+      workingDir: /root
+      args:
+        - cat /etc/docker/daemon.json;
+      # env:
+        # - name: DOCKER_TLS_CERTDIR
+        #   value: ""
         # - name: DOCKER_OPTS
         #   value: "--tlsverify=false"
       securityContext:
