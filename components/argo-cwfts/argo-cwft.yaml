@@ -43,18 +43,16 @@ spec:
       workingDir: /src/miller
       args:
         - printenv;
-          cat /etc/docker/daemon.json;
+          until docker ps; do sleep 3; done;
           docker build -t k3d-kubefirst-registry:5000/miller:1.0.3 .;
           docker push k3d-kubefirst-registry:5000/miller:1.0.3;
-          # unset DOCKER_TLS_VERIFY;
-          # until docker ps; do sleep 3; done;
       env:
       - name: DOCKER_HOST
         value: "tcp://localhost:2375"
     sidecars:
     - name: dind
       image: docker:19.03.13-dind
-      command: [bash, -c]
+      command: [sh, -c]
       workingDir: /root
       args:
         - cat /etc/docker/daemon.json;
