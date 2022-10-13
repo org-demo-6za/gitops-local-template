@@ -7,7 +7,7 @@ spec:
   replicas: 2
   template:
     spec:  
-      organization: jarededwards
+      repository: jarededwards/gitops
       image: summerwind/actions-runner-dind
       serviceAccountName: github-runner
       dockerdWithinRunnerContainer: true
