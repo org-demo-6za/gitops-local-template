@@ -27,7 +27,7 @@ spec:
     outputs:
       artifacts:
       - name: repo-source
-        path: /src  
+        path: /src
         
   - name: docker-build
     inputs:
@@ -38,11 +38,24 @@ spec:
       - name: appDir
       - name: appName
     container:
-      image: golang:latest
-      command: ["/bin/sh", "-c"]
-      args: 
-      - ls -la /src
-    # outputs:
-    #   artifacts:
-    #   - name: repo-source
-    #     path: /src  
+      image:  kubefirst/chubbo:0.1
+      command: [bash, -c]
+      workingDir: /src/gitops
+      args:
+        - until docker ps; do sleep 3; done; 
+          docker build -t localhost:63630/miller:1.0.3 .;
+          docker build -t registry.localhost:63630/miller:1.0.3 .;
+          docker push localhost:63630/miller:1.0.3;
+          docker push registry.localhost:63630/miller:1.0.3;
+      env:
+      - name: DOCKER_HOST
+        value: "tcp://localhost:2375"
+    sidecars:
+    - name: dind
+      image: docker:19.03.13-dind
+      env:
+        - name: DOCKER_TLS_CERTDIR
+          value: ""
+      securityContext:
+        privileged: true
+      mirrorVolumeMounts: true
