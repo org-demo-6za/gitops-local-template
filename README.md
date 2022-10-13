@@ -7,9 +7,8 @@ brew install k3d
 
 ## step 2 - create a new local cluster
 ```bash
-k3d registry create kubefirst-registry --port 63630
 
-k3d cluster create kubefirst --agents 3 --agents-memory 1024m  --registry-use k3d-kubefirst-registry:63630
+k3d cluster create kubefirstzzz --agents 3 --agents-memory 1024m --registry-create kubefirst-registryzz:64640
 ```
 ## step 3 helm install argocd
 ```bash
@@ -148,6 +147,24 @@ spec:
 
 
 https://github.com/ContainerSolutions/trow/blob/main/docs/USER_GUIDE.md
+
+
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: test-secrets
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  target:
+    name: test-secrets
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: vault-secrets-backend
+  refreshInterval: 10s
+  dataFrom:
+    - extract:      
+        key: /test
 ```
 
 # big side step - argo admin kubectl boom
@@ -155,3 +172,27 @@ MESSAGE
 Error (exit code 1): pods "testing-123-k8gmp-git-checkout-2935214226" is forbidden: User "system:serviceaccount:argo:default" cannot patch resource "pods" in API group "" in the namespace "argo"
 
 kubectl create rolebinding default-admin --clusterrole=admin --serviceaccount=argo:default -n argo
+
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miller-registry
+  labels:
+    app: miller-registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: miller-registry
+  template:
+    metadata:
+      labels:
+        app: miller-registry
+    spec:
+      containers:
+      - name: miller-registry
+        image: localhost:63630/miller:1.0.0
+        ports:
+        - containerPort: 80
