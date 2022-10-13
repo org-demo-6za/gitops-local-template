@@ -43,10 +43,10 @@ spec:
       workingDir: /src/miller
       args:
         - printenv;
-          unset DOCKER_TLS_VERIFY;
-          until docker ps; do sleep 3; done;
           docker build -t k3d-kubefirst-registry:5000/miller:1.0.3 .;
           docker push k3d-kubefirst-registry:5000/miller:1.0.3;
+          # unset DOCKER_TLS_VERIFY;
+          # until docker ps; do sleep 3; done;
       env:
       - name: DOCKER_HOST
         value: "tcp://localhost:2375"
@@ -61,10 +61,10 @@ spec:
       securityContext:
         privileged: true
       mirrorVolumeMounts: true
-      volumeMounts:
-      - mountPath: /etc/docker
-        name: docker-config
-    volumes:
-      - configMap:
-          name: docker-config-cm
-        name: docker-config
+    #   volumeMounts:
+    #   - mountPath: /etc/docker
+    #     name: docker-config
+    # volumes:
+    #   - configMap:
+    #       name: docker-config-cm
+    #     name: docker-config
