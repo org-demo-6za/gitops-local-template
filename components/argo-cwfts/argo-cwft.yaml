@@ -42,9 +42,9 @@ spec:
       command: [bash, -c]
       workingDir: /src/miller
       args:
-        - until docker ps; do sleep 3; done;
-          printenv;
+        - printenv;
           unset DOCKER_TLS_VERIFY;
+          until docker ps; do sleep 3; done;
           docker build -t k3d-kubefirst-registry:5000/miller:1.0.3 .;
           docker push k3d-kubefirst-registry:5000/miller:1.0.3;
       env:
