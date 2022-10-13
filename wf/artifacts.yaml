@@ -18,14 +18,6 @@ spec:
             name: cwft-local
             template: git-checkout
             clusterScope: true
-          # arguments:
-            # parameters:
-            #   - name: appDir
-            #     value: "{{workflow.parameters.appDir}}"
-            #   - name: branch
-            #     value: "{{workflow.parameters.branch}}"
-            #   - name: gitRepoUrl
-            #     value: "{{workflow.parameters.gitRepoUrl}}"
       - - name: publish-container
           templateRef:
             name: cwft-local
