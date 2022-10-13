@@ -56,7 +56,7 @@ spec:
         - name: DOCKER_TLS_CERTDIR
           value: ""
         - name: DOCKER_OPTS
-          value: "--insecure-registry=k3d-kubefirst-registry:5000"
+          value: "--tlsverify=false"
       securityContext:
         privileged: true
       mirrorVolumeMounts: true
