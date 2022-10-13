@@ -15,15 +15,15 @@ spec:
       #   default: main
       artifacts:
       - name: gitops-source
-        path: /src/gitops
+        path: /src/miller
         git:
-          repo: https://github.com/jarededwards/gitops
+          repo: https://github.com/jarededwards/miller
           revision: main
     container:
       image: golang:latest
       command: ["/bin/sh", "-c"]
       args: 
-      - ls -la /src/gitops
+      - ls -la /src/miller
     outputs:
       artifacts:
       - name: repo-source
@@ -40,7 +40,7 @@ spec:
     container:
       image:  kubefirst/chubbo:0.1
       command: [bash, -c]
-      workingDir: /src/gitops
+      workingDir: /src/miller
       args:
         - until docker ps; do sleep 3; done; 
           docker build -t localhost:63630/miller:1.0.3 .;
