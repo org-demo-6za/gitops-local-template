@@ -43,10 +43,8 @@ spec:
       workingDir: /src/miller
       args:
         - until docker ps; do sleep 3; done; 
-          docker build -t localhost:63630/miller:1.0.3 .;
-          docker build -t registry.localhost:63630/miller:1.0.3 .;
-          docker push localhost:63630/miller:1.0.3;
-          docker push registry.localhost:63630/miller:1.0.3;
+          docker build -t k3d-kubefirst-registry:63630/miller:1.0.3 .;
+          docker push k3d-kubefirst-registry:63630/miller:1.0.3;
       env:
       - name: DOCKER_HOST
         value: "tcp://localhost:2375"
