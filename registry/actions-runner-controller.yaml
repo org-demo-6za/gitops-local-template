@@ -9,7 +9,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/org-demo-6za/gitops
+    repoURL: <FULL_REPO_GITOPS_URL>
     path: components/actions-runner-controller
     targetRevision: HEAD
   destination:
