@@ -14,7 +14,7 @@ spec:
     helm:
       parameters:
         - name: orgWhitelist
-          value: github.com/jarededwards/gitops
+          value: github.com/org-demo-6za/gitops
       values: |-
         serviceAccount:
           create: true
@@ -31,7 +31,7 @@ spec:
         repoConfig: |
           ---
           repos:
-          - id: github.com/jarededwards/gitops
+          - id: github.com/org-demo-6za/gitops
             workflow: default
             allowed_overrides: [apply_requirements]
             apply_requirements: [mergeable]
