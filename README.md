@@ -1,23 +1,3 @@
-# READ HERE
-
-
-
-
-
-
-
-todo 
-- move all apps into components and wire in sync waves / sleeps :) 
-
-
-
-
-
-
-
-# READ HERE
-
-
 # gitops for local development of a cluster
 
 ## step 1 - brew install [k3d](https://k3d.io/v5.3.0)
@@ -28,7 +8,7 @@ brew install k3d
 ## step 2 - create a new local cluster
 ```bash
 
-k3d cluster create kubefirstzzz --agents 3 --agents-memory 1024m --registry-create kubefirst-registryzz:64640
+k3d cluster create kubefirst --agents 3 --agents-memory 1024m --registry-create kubefirst-registry:63630
 ```
 ## step 3 helm install argocd
 ```bash
