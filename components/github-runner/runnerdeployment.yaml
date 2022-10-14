@@ -8,7 +8,7 @@ spec:
   replicas: 2
   template:
     spec:  
-      repository: jarededwards/gitops # todo replace this
+      repository: org-demo-6za/gitops # todo replace this
       image: summerwind/actions-runner-dind
       serviceAccountName: github-runner
       dockerdWithinRunnerContainer: true
