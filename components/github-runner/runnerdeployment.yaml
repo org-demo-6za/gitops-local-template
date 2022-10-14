@@ -5,10 +5,10 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "20"
 spec:
-  replicas: 2
+  replicas: 1
   template:
     spec:  
-      repository: org-demo-6za/gitops # todo replace this
+      repository: <GITHUB_OWNER>/gitops # todo replace this
       image: summerwind/actions-runner-dind
       serviceAccountName: github-runner
       dockerdWithinRunnerContainer: true
